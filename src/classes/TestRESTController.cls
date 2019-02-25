@@ -34,27 +34,27 @@ global class TestRESTController extends RESTController {
         controller.deleteRecords();
     }
 
-    public override RestResponse postRecords() {
+    protected override RestResponse postRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('post records').getBlob();
         return response;
     }
-    public override RestResponse patchRecords() {
+    protected override RestResponse patchRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('patch records').getBlob();
         return response;
     }
-    public override RestResponse getRecords() {
+    protected override RestResponse getRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('get records').getBlob();
         return response;
     }
-    public override RestResponse putRecords() {
+    protected override RestResponse putRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('put records').getBlob();
         return response;
     }
-    public override RestResponse deleteRecords() {
+    protected override RestResponse deleteRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('delete records').getBlob();
         return response;
