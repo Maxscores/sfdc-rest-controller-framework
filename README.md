@@ -33,4 +33,32 @@ global class AccountsController extends RESTController {
         response.responseBody = new ResponseEnvelope(accountToReturn).getBlob();
         return response;
     }
+}
+```
+When writing tests, you'll need to write an implementation of the resulting envelope class in that test method in order to parse the results from a JSON Blob into Apex. For the above example it would look something like this:
+```java
+@IsTest
+public with sharing class RESTControllerTest {
+    public static AccountResponseEnvelope getAccountResponseEnvelope(RestResponse respose) {
+        String jsonResponse = response.responseBody.toString();
+        return (AccountResponseEnvelope) JSON.deserialize(jsonResponse, AccountResponseEnvelope.class);
+    }
+    
+    public class AccountResponseEnvelope {
+        public List<String> messages;
+        public List<String> errors;
+        public Account data;
+    }
+    
+    public static AccountsResponseEnvelope getAccountsResponseEnvelope(RestResponse respose) {
+        String jsonResponse = response.responseBody.toString();
+        return (AccountsResponseEnvelope) JSON.deserialize(jsonResponse, AccountsResponseEnvelope.class);
+    }
+    
+    public class AccountsResponseEnvelope {
+        public List<String> messages;
+        public List<String> errors;
+        public List<Account> data;
+    }   
+}
 ```
