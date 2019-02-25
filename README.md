@@ -83,7 +83,7 @@ public with sharing class AccountsRESTControllerTest {
 
         RestResponse response = RestContext.response;
 
-        TestResponseEnvelope envelope = getAccountResponseEnvelope(response);
+        AccountResponseEnvelope envelope = getAccountResponseEnvelope(response);
         System.assert(envelope.errors.isEmpty(), 'there should be no errors');
         System.assert(envelope.messages.isEmpty(), 'there should be no messages');
         System.assertEquals(account, envelope.data);
