@@ -5,13 +5,13 @@
  */
 
 
-@RestResource(urlMapping='/tests')
+@RestResource(UrlMapping='/tests')
 global class TestRESTController extends RESTController {
     private static TestRESTController controller = new TestRESTController();
 
     @HttpGet
     global static void getRequest() {
-        controller.getRecords();
+        RestContext.response = controller.getRecords();
     }
 
     @HttpPost
@@ -34,24 +34,29 @@ global class TestRESTController extends RESTController {
         controller.deleteRecords();
     }
 
-    public override void postRecords() {
+    public override RestResponse postRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('post records').getBlob();
+        return response;
     }
-    public override void patchRecords() {
+    public override RestResponse patchRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('patch records').getBlob();
+        return response;
     }
-    public override void getRecords() {
+    public override RestResponse getRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('get records').getBlob();
+        return response;
     }
-    public override void putRecords() {
+    public override RestResponse putRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('put records').getBlob();
+        return response;
     }
-    public override void deleteRecords() {
+    public override RestResponse deleteRecords() {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = new ResponseEnvelope('delete records').getBlob();
+        return response;
     }
 }
