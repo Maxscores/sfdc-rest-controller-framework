@@ -27,7 +27,7 @@ global class AccountsController extends RESTController {
         RestContext.response = controller.getRecords();
     }
     
-    public override RestResponse postRecords() {
+    public override RestResponse getRecords() {
         // will need to implement the override method to return the response, something like:
         Account accountToReturn = [Select Id From Account];
         response.responseBody = new ResponseEnvelope(accountToReturn).getBlob();
