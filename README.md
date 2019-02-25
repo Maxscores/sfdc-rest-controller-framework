@@ -13,14 +13,14 @@ REST has become the standard for modern web APIs. This framework provides a stan
 To create a REST Controller for a specific resource, you'll need to create a class that inherits from **RESTController.cls** and uses the @RestResource annotaion. Below is an example of the basic class setup.
 ```java
 @RestResource(UrlMapping='/accounts')
-global class AccountsController extends RESTController {
-    private static AccountsController controller = new AccountsController();
+global class AccountsRESTController extends RESTController {
+    private static AccountsRESTController controller = new AccountsRESTController();
 ```
 Additionally, you'll need to implement overrides and call them on the standard restful routes. Here's an example of the GET route:
 ```java
 @RestResource(UrlMapping='/accounts')
-global class AccountsController extends RESTController {
-    private static AccountsController controller = new AccountsController();
+global class AccountsRESTController extends RESTController {
+    private static AccountsRESTController controller = new AccountsRESTController();
     
     @HttpGet
     global static void getAccounts() {
@@ -38,7 +38,7 @@ global class AccountsController extends RESTController {
 When writing tests, you'll need to write an implementation of the resulting envelope class in that test method in order to parse the results from a JSON Blob into Apex. For the above example it would look something like this:
 ```java
 @IsTest
-public with sharing class RESTControllerTest {
+public with sharing class AccountsRESTControllerTest {
     public static AccountResponseEnvelope getAccountResponseEnvelope(RestResponse respose) {
         String jsonResponse = response.responseBody.toString();
         return (AccountResponseEnvelope) JSON.deserialize(jsonResponse, AccountResponseEnvelope.class);
@@ -60,5 +60,33 @@ public with sharing class RESTControllerTest {
         public List<String> errors;
         public List<Account> data;
     }   
+}
+```
+
+Using the above methods, your test methods will look something like this:
+```java
+@IsTest
+public with sharing class AccountsRESTControllerTest {
+    @IsTest
+    public static void testGet() {
+        Account account = new Account();
+        insert account;
+        
+        RestRequest req = new RestRequest();
+        req.requestURI = '/services/apexrest/accounts/' + account.Id;
+        req.httpMethod = 'GET';
+        req.addHeader('Content-Type', 'application/json');
+
+        RestContext.request = req;
+        RestContext.response = new RestResponse();
+        AccountsRESTController.getRequest();
+
+        RestResponse response = RestContext.response;
+
+        TestResponseEnvelope envelope = getAccountResponseEnvelope(response);
+        System.assert(envelope.errors.isEmpty(), 'there should be no errors');
+        System.assert(envelope.messages.isEmpty(), 'there should be no messages');
+        System.assertEquals(account, envelope.data);
+    }
 }
 ```
