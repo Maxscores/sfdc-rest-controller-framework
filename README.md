@@ -11,13 +11,13 @@ REST has become the standard for modern web APIs. This framework provides a stan
 ## Usage
 
 To create a REST Controller for a specific resource, you'll need to create a class that inherits from **RESTController.cls** and uses the @RestResource annotaion. Below is an example of the basic class setup.
-```
+```java
 @RestResource(UrlMapping='/accounts')
 global class AccountsController extends RESTController {
     private static AccountsController controller = new AccountsController();
 ```
 Additionally, you'll need to implement overrides and call them on the standard restful routes. Here's an example of the GET route:
-```
+```java
 @RestResource(UrlMapping='/accounts')
 global class AccountsController extends RESTController {
     private static AccountsController controller = new AccountsController();
