@@ -17,20 +17,25 @@ global virtual class RESTController {
     protected RestResponse response = RestContext.response;
     protected RestRequest request = RestContext.request;
 
-    protected virtual void postRecords() {
+    protected virtual RestResponse postRecords() {
         // implementation logic
+        return new RestResponse();
     }
-    protected virtual void patchRecords() {
+    protected virtual RestResponse patchRecords() {
         // implementation logic
+        return new RestResponse();
     }
-    protected virtual void getRecords() {
+    protected virtual RestResponse getRecords() {
         // implementation logic
+        return new RestResponse();
    }
-    protected virtual void putRecords() {
+    protected virtual RestResponse putRecords() {
         // implementation logic
+        return new RestResponse();
     }
-    protected virtual void deleteRecords() {
+    protected virtual RestResponse deleteRecords() {
         // implementation logic
+        return new RestResponse();
     }
 
     global class ResponseEnvelope {
