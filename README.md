@@ -8,6 +8,15 @@ REST has become the standard for modern web APIs. This framework provides a stan
 **Deploy to Salesforce Org:**
 [![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png)](https://githubsfdeploy.herokuapp.com/?owner=Maxscores&repo=sfdc-rest-controller-framework&ref=master)
 
+The default response schema follows industry guidelines:
+```json
+{
+    "data": {},
+    "messages": [],
+    "errors": []
+}
+```
+
 ## Usage
 
 To create a REST Controller for a specific resource, you'll need to create a class that inherits from **RESTController.cls** and uses the @RestResource annotaion. Below is an example of the basic class setup.
@@ -90,11 +99,4 @@ public with sharing class AccountsRESTControllerTest {
     }
 }
 ```
-The response envelope class is used to build a response for this schema. This can be customized however necessary based on project requirements.
-```json
-{
-    "data": {},
-    "messages": [],
-    "errors": []
-}
-```
+
