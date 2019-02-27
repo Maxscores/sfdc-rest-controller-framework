@@ -1,5 +1,5 @@
 # sfdc-rest-controller-framework
-Generic framework that can be used to implement REST Controllers
+Generic framework that can be used to implement REST Controllers. Contributions are welcome! Would love to extend the class to include more generic functionality.
 
 ## Overview
 
