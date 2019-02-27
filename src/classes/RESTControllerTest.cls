@@ -104,16 +104,16 @@ public with sharing class RESTControllerTest {
     public static void testStatuses() {
         TestRESTController controller = new TestRESTController();
 
-        System.assertEquals(200, controller.ok);
-        System.assertEquals(201, controller.created);
-        System.assertEquals(204, controller.noContent);
-        System.assertEquals(301, controller.movedPermanently);
-        System.assertEquals(304, controller.notModified);
-        System.assertEquals(400, controller.badRequest);
-        System.assertEquals(401, controller.unauthorized);
-        System.assertEquals(403, controller.forbidden);
-        System.assertEquals(404, controller.notFound);
-        System.assertEquals(500, controller.internalServerError);
+        System.assertEquals(200, controller.statusCode.ok);
+        System.assertEquals(201, controller.statusCode.created);
+        System.assertEquals(204, controller.statusCode.noContent);
+        System.assertEquals(301, controller.statusCode.movedPermanently);
+        System.assertEquals(304, controller.statusCode.notModified);
+        System.assertEquals(400, controller.statusCode.badRequest);
+        System.assertEquals(401, controller.statusCode.unauthorized);
+        System.assertEquals(403, controller.statusCode.forbidden);
+        System.assertEquals(404, controller.statusCode.notFound);
+        System.assertEquals(500, controller.statusCode.internalServerError);
     }
 
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {

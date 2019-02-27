@@ -16,6 +16,8 @@
 global virtual class RESTController {
     protected RestResponse response = RestContext.response;
     protected RestRequest request = RestContext.request;
+    @TestVisible
+    protected StatusCode statusCode = new StatusCode();
 
     protected virtual RestResponse postRecords() {
         // implementation logic
@@ -38,10 +40,10 @@ global virtual class RESTController {
         return new RestResponse();
     }
 
-    global class ResponseEnvelope {
-        global List<String> messages = new List<String>();
-        global List<String> errors = new List<String>();
-        global Object data;
+    public class ResponseEnvelope {
+        public List<String> messages = new List<String>();
+        public List<String> errors = new List<String>();
+        public Object data;
 
         public ResponseEnvelope(Object singleObject) {
             data = singleObject;
@@ -56,29 +58,21 @@ global virtual class RESTController {
         }
     }
 
-    // HTTP Status codes from https://www.restapitutorial.com/httpstatuscodes.html
-    // 2xx = Successful Responses
-    @TestVisible
-    protected Integer ok = 200;
-    @TestVisible
-    protected Integer created = 201;
-    @TestVisible
-    protected Integer noContent = 204;
-    // 3xx = Redirection
-    @TestVisible
-    protected Integer movedPermanently = 301;
-    @TestVisible
-    protected Integer notModified = 304; // from wikipedia: Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match. In such case, there is no need to retransmit the resource since the client still has a previously-downloaded copy.
-    // 4xx = Client Error (problem with request)
-    @TestVisible
-    protected Integer badRequest = 400;
-    @TestVisible
-    protected Integer unauthorized = 401;
-    @TestVisible
-    protected Integer forbidden = 403;
-    @TestVisible
-    protected Integer notFound = 404;
-    // 5xx = Server Error (problem with server), should automatically get returned if there is an error
-    @TestVisible
-    protected Integer internalServerError = 500;
+    public class StatusCode {
+        // HTTP Status codes from https://www.restapitutorial.com/httpstatuscodes.html
+        // 2xx = Successful Responses
+        public Integer ok = 200;
+        public Integer created = 201;
+        public Integer noContent = 204;
+        // 3xx = Redirection
+        public Integer movedPermanently = 301;
+        public Integer notModified = 304; // from wikipedia: Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match. In such case, there is no need to retransmit the resource since the client still has a previously-downloaded copy.
+        // 4xx = Client Error (problem with request)
+        public Integer badRequest = 400;
+        public Integer unauthorized = 401;
+        public Integer forbidden = 403;
+        public Integer notFound = 404;
+        // 5xx = Server Error (problem with server), should automatically get returned if there is an error
+        public Integer internalServerError = 500;
+    }
 }
