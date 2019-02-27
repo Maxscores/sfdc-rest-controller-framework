@@ -90,3 +90,11 @@ public with sharing class AccountsRESTControllerTest {
     }
 }
 ```
+The response envelope class is used to build a response for this schema. This can be customized however necessary based on project requirements.
+```json
+{
+    "data": {},
+    "messages": [],
+    "errors": []
+}
+```
