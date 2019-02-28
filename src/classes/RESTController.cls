@@ -16,29 +16,16 @@
 global virtual class RESTController {
     protected RestResponse response = RestContext.response;
     protected RestRequest request = RestContext.request;
-    @TestVisible
+        @TestVisible
     protected StatusCode statusCode = new StatusCode();
+    protected ResponseEnvelope envelope = new ResponseEnvelope();
 
-    protected virtual RestResponse postRecords() {
-        // implementation logic
-        return new RestResponse();
-    }
-    protected virtual RestResponse patchRecords() {
-        // implementation logic
-        return new RestResponse();
-    }
-    protected virtual RestResponse getRecords() {
-        // implementation logic
-        return new RestResponse();
-   }
-    protected virtual RestResponse putRecords() {
-        // implementation logic
-        return new RestResponse();
-    }
-    protected virtual RestResponse deleteRecords() {
-        // implementation logic
-        return new RestResponse();
-    }
+    // implementation methods
+    protected virtual void postRecords() {}
+    protected virtual void patchRecords() {}
+    protected virtual void getRecords() {}
+    protected virtual void putRecords() {}
+    protected virtual void deleteRecords() {}
 
     public class ResponseEnvelope {
         public List<String> messages = new List<String>();
@@ -53,7 +40,31 @@ global virtual class RESTController {
             data = objectList;
         }
 
-        public Blob getBlob() {
+        public void setData(Object singleObject) {
+            data = singleObject;
+        }
+
+        public void setData(List<Object> objectList) {
+            data = objectList;
+        }
+
+        public void addErrors(List<String> errorsToAdd) {
+            errors.addAll(errorsToAdd);
+        }
+
+        public void addError(String errorToAdd) {
+            errors.add(errorToAdd);
+        }
+
+        public void addMessages(List<String> messagesToAdd) {
+            messages.addAll(messagesToAdd);
+        }
+
+        public void addMessage(String messageToAdd) {
+            messages.add(messageToAdd);
+        }
+
+        public Blob asBlob() {
             return Blob.valueOf(JSON.serialize(this));
         }
     }

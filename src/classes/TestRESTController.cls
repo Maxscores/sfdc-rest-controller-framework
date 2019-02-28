@@ -13,7 +13,7 @@ global class TestRESTController extends RESTController {
 
     @HttpGet
     global static void getRequest() {
-        RestContext.response = controller.getRecords();
+        controller.getRecords();
     }
 
     @HttpPost
@@ -36,29 +36,40 @@ global class TestRESTController extends RESTController {
         controller.deleteRecords();
     }
 
-    protected override RestResponse postRecords() {
+    protected override void postRecords() {
+        envelope.setData('post records');
+
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = new ResponseEnvelope('post records').getBlob();
-        return response;
+        response.responseBody = envelope.asBlob();
     }
-    protected override RestResponse patchRecords() {
+    protected override void patchRecords() {
+        envelope.setData('patch records');
+
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = new ResponseEnvelope('patch records').getBlob();
-        return response;
+        response.responseBody = envelope.asBlob();
     }
-    protected override RestResponse getRecords() {
+    protected override void getRecords() {
+        String requestType = request.headers.get('Type');
+        if (requestType == 'error') {
+            envelope.addError('error');
+        } else if (requestType == 'message') {
+            envelope.addMessage('message');
+        }
+        envelope.setData('get records');
+
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = new ResponseEnvelope('get records').getBlob();
-        return response;
+        response.responseBody = envelope.asBlob();
     }
-    protected override RestResponse putRecords() {
+    protected override void putRecords() {
+        envelope.setData('put records')
+
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = new ResponseEnvelope('put records').getBlob();
-        return response;
+        response.responseBody = envelope('put records').asBlob();
     }
-    protected override RestResponse deleteRecords() {
+    protected override void deleteRecords() {
+        envelope.setData('delete records')
+
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = new ResponseEnvelope('delete records').getBlob();
-        return response;
+        response.responseBody = envelope.asBlob();
     }
 }
