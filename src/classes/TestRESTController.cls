@@ -49,6 +49,7 @@ global class TestRESTController extends RESTController {
         response.responseBody = envelope.asBlob();
     }
     protected override void getRecords() {
+            System.debug(request.headers.get('Type'));
         String requestType = request.headers.get('Type');
         if (requestType == 'error') {
             envelope.addError('error');
