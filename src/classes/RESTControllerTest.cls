@@ -185,6 +185,8 @@ public with sharing class RESTControllerTest {
         envelope.addMessages(new List<String>{'Message 2', 'Message 3'});
         System.assertEquals('Message 2', envelope.messages[1]);
         System.assertEquals('Message 3', envelope.messages[2]);
+
+        System.assertEquals(Blob.type, envelope.data.asBlob().type);
     }
 
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {
