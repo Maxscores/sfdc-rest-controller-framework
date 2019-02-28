@@ -1,5 +1,5 @@
 /**
- * Created by mstackhouse on 2/25/2019.
+ * Created by max stackhouse under the MIT License, https://github.com/Maxscores/sfdc-rest-controller-framework
  * Description: Virtual class for a REST Controller to provide inherited methods for standardization.
  *
  * Usage: When defining a specific REST controller for a resource extend this class and overwrite methods

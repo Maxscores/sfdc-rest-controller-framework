@@ -1,5 +1,5 @@
 /**
- * Created by mstackhouse on 2/25/2019.
+ * Created by max stackhouse under the MIT License, https://github.com/Maxscores/sfdc-rest-controller-framework
  * Description: Tests RESTController using the TestRESTController implementation
  */
 
