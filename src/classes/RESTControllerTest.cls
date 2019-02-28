@@ -158,6 +158,35 @@ public with sharing class RESTControllerTest {
         System.assertEquals(500, controller.statusCode.internalServerError);
     }
 
+    @IsTest
+    public static void testResponseEnvelope() {
+        RESTController.ResponseEnvelope envelope = new RESTController.ResponseEnvelope();
+
+        System.assertNotEquals(null, envelope.errors);
+        System.assertNotEquals(null, envelope.messages);
+        System.assertEquals(null, envelope.data);
+
+        envelope.setData('hello');
+        System.assertEquals('hello', envelope.data);
+
+        envelope.setData(List<String>{'hello', 'my', 'friend'});
+        System.assertEquals(3, envelope.data.length);
+
+        envelope.addError('error 1');
+        System.assertEquals('error 1', envelope.errors[0]);
+
+        envelope.addErrors(new List<String>{'error 2', 'error 3'});
+        System.assertEquals('error 2', envelope.errors[1]);
+        System.assertEquals('error 3', envelope.errors[2]);
+
+        envelope.addMessage('Message 1');
+        System.assertEquals('Message 1', envelope.message[0]);
+
+        envelope.addMessages(new List<String>{'Message 2', 'Message 3'});
+        System.assertEquals('Message 2', envelope.messages[1]);
+        System.assertEquals('Message 3', envelope.messages[2]);
+    }
+
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {
         String jsonResponse = response.responseBody.toString();
         return (TestResponseEnvelope) JSON.deserialize(jsonResponse, TestResponseEnvelope.class);
