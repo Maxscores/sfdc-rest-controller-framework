@@ -16,7 +16,7 @@
 global virtual class RESTController {
     protected RestResponse response = RestContext.response;
     protected RestRequest request = RestContext.request;
-        @TestVisible
+    @TestVisible
     protected StatusCode statusCode = new StatusCode();
     protected ResponseEnvelope envelope = new ResponseEnvelope();
 

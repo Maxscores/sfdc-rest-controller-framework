@@ -10,7 +10,7 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'GET';
-        req.headers.put('Content-Type', 'application/json');
+        req.addHeader('Content-Type', 'application/json');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
@@ -29,7 +29,7 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'PUT';
-        req.headers.put('Content-Type', 'application/json');
+        req.addHeader('Content-Type', 'application/json');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
@@ -48,7 +48,7 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'POST';
-        req.headers.put('Content-Type', 'application/json');
+        req.addHeader('Content-Type', 'application/json');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
@@ -67,7 +67,7 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'PATCH';
-        req.headers.put('Content-Type', 'application/json');
+        req.addHeader('Content-Type', 'application/json');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
@@ -86,7 +86,7 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'DELETE';
-        req.headers.put('Content-Type', 'application/json');
+        req.addHeader('Content-Type', 'application/json');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
@@ -105,12 +105,12 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'GET';
-        req.headers.put('Content-Type', 'application/json');
-        req.headers.put('Type', 'error');
+        req.addHeader('Content-Type', 'application/json');
+        req.addParameter('Type', 'error');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
-        TestRESTController.deleteRequest();
+        TestRESTController.getRequest();
 
         RestResponse response = RestContext.response;
 
@@ -126,12 +126,12 @@ public with sharing class RESTControllerTest {
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'GET';
-        req.headers.put('Content-Type', 'application/json');
-        req.headers.put('Type', 'message');
+        req.addHeader('Content-Type', 'application/json');
+        req.addParameter('Type', 'message');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
-        TestRESTController.deleteRequest();
+        TestRESTController.getRequest();
 
         RestResponse response = RestContext.response;
 
