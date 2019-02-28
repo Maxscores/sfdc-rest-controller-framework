@@ -101,6 +101,48 @@ public with sharing class RESTControllerTest {
     }
 
     @IsTest
+    public static void testErrors() {
+        RestRequest req = new RestRequest();
+        req.requestURI = '/services/apexrest/tests/12345';
+        req.httpMethod = 'GET';
+        req.addHeader('Content-Type', 'application/json');
+        req.addHeader('Type', 'error');
+
+        RestContext.request = req;
+        RestContext.response = new RestResponse();
+        TestRESTController.deleteRequest();
+
+        RestResponse response = RestContext.response;
+
+        TestResponseEnvelope envelope = getResponseEnvelope(response);
+        System.assertEquals(1, envelope.errors.size(), 'there should be one error');
+        System.assertEquals('error', envelope.errors[0]);
+        System.assert(envelope.messages.isEmpty(), 'there should be no messages');
+        System.assertEquals('delete records', envelope.data);
+    }
+
+    @IsTest
+    public static void testMessages() {
+        RestRequest req = new RestRequest();
+        req.requestURI = '/services/apexrest/tests/12345';
+        req.httpMethod = 'GET';
+        req.addHeader('Content-Type', 'application/json');
+        req.addHeader('Type', 'message');
+
+        RestContext.request = req;
+        RestContext.response = new RestResponse();
+        TestRESTController.deleteRequest();
+
+        RestResponse response = RestContext.response;
+
+        TestResponseEnvelope envelope = getResponseEnvelope(response);
+        System.assert(envelope.errors.isEmpty(), 'there should be no errors');
+        System.assertEquals(1, envelope.messages.size(), 'there should be one message');
+        System.assertEquals('message', envelope.messages[0]);
+        System.assertEquals('delete records', envelope.data);
+    }
+
+    @IsTest
     public static void testStatuses() {
         TestRESTController controller = new TestRESTController();
 
