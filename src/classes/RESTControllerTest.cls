@@ -160,7 +160,7 @@ public with sharing class RESTControllerTest {
 
     @IsTest
     public static void testResponseEnvelope() {
-        RESTController.ResponseEnvelope envelope = new RESTController.ResponseEnvelope();
+        TestRESTController.ResponseEnvelope envelope = new TestRESTController.ResponseEnvelope();
 
         System.assertNotEquals(null, envelope.errors);
         System.assertNotEquals(null, envelope.messages);
