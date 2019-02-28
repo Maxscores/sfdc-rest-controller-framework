@@ -118,7 +118,7 @@ public with sharing class RESTControllerTest {
         System.assertEquals(1, envelope.errors.size(), 'there should be one error');
         System.assertEquals('error', envelope.errors[0]);
         System.assert(envelope.messages.isEmpty(), 'there should be no messages');
-        System.assertEquals('delete records', envelope.data);
+        System.assertEquals('get records', envelope.data);
     }
 
     @IsTest
@@ -139,7 +139,7 @@ public with sharing class RESTControllerTest {
         System.assert(envelope.errors.isEmpty(), 'there should be no errors');
         System.assertEquals(1, envelope.messages.size(), 'there should be one message');
         System.assertEquals('message', envelope.messages[0]);
-        System.assertEquals('delete records', envelope.data);
+        System.assertEquals('get records', envelope.data);
     }
 
     @IsTest
