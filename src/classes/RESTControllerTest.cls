@@ -159,8 +159,8 @@ public with sharing class RESTControllerTest {
     }
 
     @IsTest
-    public static void testResponseEnvelope() {
-        TestRESTController.ResponseEnvelope envelope = new TestRESTController.ResponseEnvelope();
+    public static void testEnvelopeMethods() {
+        RESTController.ResponseEnvelope envelope = new RESTController.ResponseEnvelope();
 
         System.assertNotEquals(null, envelope.errors);
         System.assertNotEquals(null, envelope.messages);
@@ -169,8 +169,9 @@ public with sharing class RESTControllerTest {
         envelope.setData('hello');
         System.assertEquals('hello', envelope.data);
 
-        envelope.setData(List<String>{'hello', 'my', 'friend'});
-        System.assertEquals(3, envelope.data.length);
+        envelope = new RESTController.ResponseEnvelope();
+        envelope.setData(new List<String>{'hello', 'my', 'friend'});
+        System.assertEquals(new List<String>{'hello', 'my', 'friend'}, envelope.data);
 
         envelope.addError('error 1');
         System.assertEquals('error 1', envelope.errors[0]);
@@ -180,13 +181,13 @@ public with sharing class RESTControllerTest {
         System.assertEquals('error 3', envelope.errors[2]);
 
         envelope.addMessage('Message 1');
-        System.assertEquals('Message 1', envelope.message[0]);
+        System.assertEquals('Message 1', envelope.messages[0]);
 
         envelope.addMessages(new List<String>{'Message 2', 'Message 3'});
         System.assertEquals('Message 2', envelope.messages[1]);
         System.assertEquals('Message 3', envelope.messages[2]);
 
-        System.assertEquals(Blob.type, envelope.data.asBlob().type);
+        System.assertEquals(Blob.valueOf(JSON.serialize(envelope)), envelope.asBlob());
     }
 
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {
