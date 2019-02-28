@@ -106,11 +106,11 @@ public with sharing class RESTControllerTest {
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'GET';
         req.addHeader('Content-Type', 'application/json');
-        req.addHeader('Type', 'error');
+        req.addParameter('Type', 'error');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
-        TestRESTController.deleteRequest();
+        TestRESTController.getRequest();
 
         RestResponse response = RestContext.response;
 
@@ -118,7 +118,7 @@ public with sharing class RESTControllerTest {
         System.assertEquals(1, envelope.errors.size(), 'there should be one error');
         System.assertEquals('error', envelope.errors[0]);
         System.assert(envelope.messages.isEmpty(), 'there should be no messages');
-        System.assertEquals('delete records', envelope.data);
+        System.assertEquals('get records', envelope.data);
     }
 
     @IsTest
@@ -127,11 +127,11 @@ public with sharing class RESTControllerTest {
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'GET';
         req.addHeader('Content-Type', 'application/json');
-        req.addHeader('Type', 'message');
+        req.addParameter('Type', 'message');
 
         RestContext.request = req;
         RestContext.response = new RestResponse();
-        TestRESTController.deleteRequest();
+        TestRESTController.getRequest();
 
         RestResponse response = RestContext.response;
 
@@ -139,7 +139,7 @@ public with sharing class RESTControllerTest {
         System.assert(envelope.errors.isEmpty(), 'there should be no errors');
         System.assertEquals(1, envelope.messages.size(), 'there should be one message');
         System.assertEquals('message', envelope.messages[0]);
-        System.assertEquals('delete records', envelope.data);
+        System.assertEquals('get records', envelope.data);
     }
 
     @IsTest
@@ -156,6 +156,38 @@ public with sharing class RESTControllerTest {
         System.assertEquals(403, controller.statusCode.forbidden);
         System.assertEquals(404, controller.statusCode.notFound);
         System.assertEquals(500, controller.statusCode.internalServerError);
+    }
+
+    @IsTest
+    public static void testEnvelopeMethods() {
+        RESTController.ResponseEnvelope envelope = new RESTController.ResponseEnvelope();
+
+        System.assertNotEquals(null, envelope.errors);
+        System.assertNotEquals(null, envelope.messages);
+        System.assertEquals(null, envelope.data);
+
+        envelope.setData('hello');
+        System.assertEquals('hello', envelope.data);
+
+        envelope = new RESTController.ResponseEnvelope();
+        envelope.setData(new List<String>{'hello', 'my', 'friend'});
+        System.assertEquals(new List<String>{'hello', 'my', 'friend'}, envelope.data);
+
+        envelope.addError('error 1');
+        System.assertEquals('error 1', envelope.errors[0]);
+
+        envelope.addErrors(new List<String>{'error 2', 'error 3'});
+        System.assertEquals('error 2', envelope.errors[1]);
+        System.assertEquals('error 3', envelope.errors[2]);
+
+        envelope.addMessage('Message 1');
+        System.assertEquals('Message 1', envelope.messages[0]);
+
+        envelope.addMessages(new List<String>{'Message 2', 'Message 3'});
+        System.assertEquals('Message 2', envelope.messages[1]);
+        System.assertEquals('Message 3', envelope.messages[2]);
+
+        System.assertEquals(Blob.valueOf(JSON.serialize(envelope)), envelope.asBlob());
     }
 
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {

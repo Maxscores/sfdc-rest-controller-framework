@@ -16,7 +16,7 @@
 global virtual class RESTController {
     protected RestResponse response = RestContext.response;
     protected RestRequest request = RestContext.request;
-        @TestVisible
+    @TestVisible
     protected StatusCode statusCode = new StatusCode();
     protected ResponseEnvelope envelope = new ResponseEnvelope();
 
@@ -31,14 +31,6 @@ global virtual class RESTController {
         public List<String> messages = new List<String>();
         public List<String> errors = new List<String>();
         public Object data;
-
-        public ResponseEnvelope(Object singleObject) {
-            data = singleObject;
-        }
-
-        public ResponseEnvelope(List<Object> objectList) {
-            data = objectList;
-        }
 
         public void setData(Object singleObject) {
             data = singleObject;

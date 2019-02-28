@@ -49,7 +49,9 @@ global class TestRESTController extends RESTController {
         response.responseBody = envelope.asBlob();
     }
     protected override void getRecords() {
-        String requestType = request.headers.get('Type');
+        System.debug(request);
+            System.debug(request.params.get('Type'));
+        String requestType = request.params.get('Type');
         if (requestType == 'error') {
             envelope.addError('error');
         } else if (requestType == 'message') {
@@ -61,13 +63,13 @@ global class TestRESTController extends RESTController {
         response.responseBody = envelope.asBlob();
     }
     protected override void putRecords() {
-        envelope.setData('put records')
+        envelope.setData('put records');
 
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope('put records').asBlob();
+        response.responseBody = envelope.asBlob();
     }
     protected override void deleteRecords() {
-        envelope.setData('delete records')
+        envelope.setData('delete records');
 
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = envelope.asBlob();
