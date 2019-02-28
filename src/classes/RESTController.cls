@@ -32,14 +32,6 @@ global virtual class RESTController {
         public List<String> errors = new List<String>();
         public Object data;
 
-        public ResponseEnvelope(Object singleObject) {
-            data = singleObject;
-        }
-
-        public ResponseEnvelope(List<Object> objectList) {
-            data = objectList;
-        }
-
         public void setData(Object singleObject) {
             data = singleObject;
         }

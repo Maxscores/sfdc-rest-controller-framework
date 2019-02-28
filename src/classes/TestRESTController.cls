@@ -61,13 +61,13 @@ global class TestRESTController extends RESTController {
         response.responseBody = envelope.asBlob();
     }
     protected override void putRecords() {
-        envelope.setData('put records')
+        envelope.setData('put records');
 
         response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope('put records').asBlob();
+        response.responseBody = envelope.asBlob();
     }
     protected override void deleteRecords() {
-        envelope.setData('delete records')
+        envelope.setData('delete records');
 
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = envelope.asBlob();
