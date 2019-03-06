@@ -160,10 +160,10 @@ public with sharing class RESTControllerTest {
 
     @IsTest
     public static void TestRequestEnvelope() {
-        String jsonRequest = '{\"data\": { '
-            + '\"firstName\": \"Von\",'
-            + '\"lastName\": \"Miller\"'
-            + '}}';
+        String jsonRequest = '{\"data\": { ' +
+             '\"firstName\": \"Von\",' +
+             '\"lastName\": \"Miller\"' +
+             '}}';
         TestRESTController.RequestEnvelope envelope = TestRESTController.RequestEnvelope.getRequestEnvelope(jsonRequest);
 
         System.assertNotEquals(null, envelope.data);
