@@ -173,12 +173,9 @@ public with sharing class RESTControllerTest {
 
     @IsTest
     public static void TestEnheritedRequestEnvelope() {
-        String jsonRequest = '{\"data\": \"{' +
-             '\"firstName\": \"Von\",' +
-             '\"lastName\": \"Miller\"' +
-             '}\"}';
+        String jsonRequest = '{\"data\": \"expectedData\"}';
 
-        String expectedData = '{\"firstName\": \"Von\",\"lastName\": \"Miller\"}}';
+        String expectedData = 'expectedData';
         RESTController.RequestEnvelope envelope = new RESTController.RequestEnvelope(jsonRequest);
 
         System.assertNotEquals(null, envelope.data);
