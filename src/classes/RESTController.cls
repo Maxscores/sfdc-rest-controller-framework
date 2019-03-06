@@ -61,6 +61,10 @@ global virtual class RESTController {
         }
     }
 
+    public class RequestEnvelope {
+        public Object data;
+    }
+
     public class StatusCode {
         // HTTP Status codes from https://www.restapitutorial.com/httpstatuscodes.html
         // 2xx = Successful Responses
