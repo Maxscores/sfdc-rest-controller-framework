@@ -159,7 +159,7 @@ public with sharing class RESTControllerTest {
     }
 
     @IsTest
-    public static void TestRequestEnvelope() {
+    public static void TestNewRequestEnvelope() {
         String jsonRequest = '{\"data\": {' +
              '\"firstName\": \"Von\",' +
              '\"lastName\": \"Miller\"' +
@@ -169,6 +169,17 @@ public with sharing class RESTControllerTest {
         System.assertNotEquals(null, envelope.data);
         System.assertEquals('Von', envelope.data.firstName);
         System.assertEquals('Miller', envelope.data.lastName);
+    }
+
+    @IsTest
+    public static void TestEnheritedRequestEnvelope() {
+        String jsonRequest = '{\"data\": {' +
+             '\"firstName\": \"Von\",' +
+             '\"lastName\": \"Miller\"' +
+             '}}';
+        RESTController.RequestEnvelope envelope = new RESTController.RequestEnvelope(jsonRequest);
+
+        System.assertNotEquals(null, envelope.data);
     }
 
     @IsTest
