@@ -104,7 +104,7 @@ The framework also provides a suggestion for formatting incoming data. For this,
 1) a response envelope
 2) a response data prototype
 This will allow you to deserialize the data from JSON. See the example from the TestRESTController:
-```
+```java
 public class RequestEnvelope {
     public RequestLead data;
 
