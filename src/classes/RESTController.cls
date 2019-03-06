@@ -64,9 +64,9 @@ global virtual class RESTController {
     public class RequestEnvelope {
         public Object data;
 
-        public RequestEnvelope(String jsonRequest) {
+        public static RequestEnvelope getRequestEnvelope(String jsonRequest) {
             RequestEnvelope request = (RequestEnvelope) JSON.deserialize(jsonRequest, RequestEnvelope.class);
-            this.data = request.data;
+            return request;
         }
     }
 

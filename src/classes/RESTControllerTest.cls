@@ -164,7 +164,7 @@ public with sharing class RESTControllerTest {
             + '\"firstName\": \"Von\",'
             + '\"lastName\": \"Miller\"'
             + '}}';
-        TestRESTController.RequestEnvelope envelope = new TestRESTController.RequestEnvelope(jsonRequest);
+        TestRESTController.RequestEnvelope envelope = TestRESTController.RequestEnvelope.getRequestEnvelope(jsonRequest);
 
         System.assertNotEquals(null, envelope.data);
         System.assertEquals('Von', envelope.data.firstName);
