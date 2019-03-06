@@ -74,4 +74,13 @@ global class TestRESTController extends RESTController {
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = envelope.asBlob();
     }
+
+    public class RequestEnvelope {
+        public override RequestLead data;
+    }
+
+    public class RequestLead {
+        public String firstName;
+        public String lastName;
+    }
 }
