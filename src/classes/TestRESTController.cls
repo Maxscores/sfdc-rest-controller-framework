@@ -76,7 +76,10 @@ global class TestRESTController extends RESTController {
     }
 
     public class RequestEnvelope {
-        public override RequestLead data;
+        public RequestLead getDeserializedData() {
+            RequestLead requestLeadData = (RequestLead) JSON.deserialize(data, RequestLead.class);
+            return requestLeadData;
+        }
     }
 
     public class RequestLead {

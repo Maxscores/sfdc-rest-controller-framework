@@ -160,15 +160,17 @@ public with sharing class RESTControllerTest {
 
     @IsTest
     public static void TestRequestEnvelope() {
-        String jsonRequest = '{\"data\": { ' +
+        String jsonRequest = '{\"data\": {' +
              '\"firstName\": \"Von\",' +
              '\"lastName\": \"Miller\"' +
              '}}';
-        TestRESTController.RequestEnvelope envelope = TestRESTController.RequestEnvelope.getRequestEnvelope(jsonRequest);
+        TestRESTController.RequestEnvelope envelope = new TestRESTController.RequestEnvelope(jsonRequest);
+        TestRESTController.RequestLead requestLead = envelope.getDeserializedData();
 
         System.assertNotEquals(null, envelope.data);
-        System.assertEquals('Von', envelope.data.firstName);
-        System.assertEquals('Miller', envelope.data.lastName);
+        System.assertEquals('{\"firstName\": \"Von\",\"lastName\": \"Miller\"}', envelope.data);
+        System.assertEquals('Von', requestLead.firstName);
+        System.assertEquals('Miller', requestLead.lastName);
     }
 
     @IsTest
