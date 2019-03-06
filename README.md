@@ -103,6 +103,7 @@ public with sharing class AccountsRESTControllerTest {
 The framework also provides a suggestion for formatting incoming data. For this, you'll need to implement two pieces.
 1) a request data prototype (RequestLead)
 2) a request envelope (RequestEnvelope) that uses the request data prototype and has a constructor
+
 This will allow you to deserialize the data from JSON. See the example from the TestRESTController:
 ```java
 public class RequestEnvelope {
