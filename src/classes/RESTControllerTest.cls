@@ -178,7 +178,7 @@ public with sharing class RESTControllerTest {
              '\"lastName\": \"Miller\"' +
              '}}';
 
-        String expectedData = '{\"firstName\": \"Von\",\"lastName\": \"Miller\"}}'
+        String expectedData = '{\"firstName\": \"Von\",\"lastName\": \"Miller\"}}';
         RESTController.RequestEnvelope envelope = new RESTController.RequestEnvelope(jsonRequest);
 
         System.assertNotEquals(null, envelope.data);
