@@ -3,7 +3,7 @@ Generic framework that can be used to implement REST Controllers. Contributions 
 
 ## Overview
 
-REST has become the standard for modern web APIs. This framework provides a standardized approach to building REST Endpoints and provides access to important status codes and a standardized response envelope that follows a popular schema.
+REST has become the standard for modern web APIs. This framework provides a standardized approach to building REST Endpoints and provides access to important status codes and a standardized response envelope that follows a popular schema. The framework assumes you'll be using JSON for the requests and responses since it is so simple to work with.
 
 **Deploy to Salesforce Org:**
 [![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png)](https://githubsfdeploy.herokuapp.com/?owner=Maxscores&repo=sfdc-rest-controller-framework&ref=master)
@@ -30,12 +30,12 @@ Additionally, you'll need to implement overrides and call them on the standard r
 @RestResource(UrlMapping='/accounts')
 global class AccountsRESTController extends RESTController {
     private static AccountsRESTController controller = new AccountsRESTController();
-    
+
     @HttpGet
     global static void getAccounts() {
         RestContext.response = controller.getRecords();
     }
-    
+
     public override RestResponse getRecords() {
         // will need to implement the override method to return the response, something like:
         Account accountToReturn = [Select Id From Account];
@@ -52,18 +52,18 @@ public with sharing class AccountsRESTControllerTest {
         String jsonResponse = response.responseBody.toString();
         return (AccountResponseEnvelope) JSON.deserialize(jsonResponse, AccountResponseEnvelope.class);
     }
-    
+
     public class AccountResponseEnvelope {
         public List<String> messages;
         public List<String> errors;
         public Account data;
     }
-    
+
     public static AccountsResponseEnvelope getAccountsResponseEnvelope(RestResponse respose) {
         String jsonResponse = response.responseBody.toString();
         return (AccountsResponseEnvelope) JSON.deserialize(jsonResponse, AccountsResponseEnvelope.class);
     }
-    
+
     public class AccountsResponseEnvelope {
         public List<String> messages;
         public List<String> errors;
@@ -80,7 +80,7 @@ public with sharing class AccountsRESTControllerTest {
     public static void testGet() {
         Account account = new Account();
         insert account;
-        
+
         RestRequest req = new RestRequest();
         req.requestURI = '/services/apexrest/accounts/' + account.Id;
         req.httpMethod = 'GET';
@@ -100,3 +100,23 @@ public with sharing class AccountsRESTControllerTest {
 }
 ```
 
+The framework also provides a suggestion for formatting incoming data. For this, you'll need to implement two pieces.
+1) a request data prototype (RequestLead)
+2) a request envelope (RequestEnvelope) that uses the request data prototype and has a constructor
+
+This will allow you to deserialize the data from JSON. See the example from the TestRESTController:
+```java
+public class RequestEnvelope {
+    public RequestLead data;
+
+    public RequestEnvelope(String jsonRequest) {
+        RequestEnvelope request = (RequestEnvelope) JSON.deserialize(jsonRequest, RequestEnvelope.class);
+        data = request.data;
+    }
+}
+
+public class RequestLead {
+    public String firstName;
+    public String lastName;
+}
+```
