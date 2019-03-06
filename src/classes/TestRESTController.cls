@@ -79,7 +79,8 @@ global class TestRESTController extends RESTController {
         public RequestLead data;
 
         public RequestEnvelope(String jsonRequest) {
-            super(jsonRequest);
+            RequestEnvelope request = (RequestEnvelope) JSON.deserialize(jsonRequest, RequestEnvelope.class);
+            data = request.data;
         }
     }
 
