@@ -64,7 +64,7 @@ global virtual class RESTController {
     // define this class in enheriting classes
     public class RequestEnvelope {
         // set data to the inner class that models the data
-        public Object data;
+        public String data;
 
         // create a constructor in the enheriting class, literally copy this
         public RequestEnvelope(String jsonRequest) {
