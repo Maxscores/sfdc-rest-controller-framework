@@ -46,6 +46,9 @@ public with sharing class RESTControllerTest {
     @IsTest
     public static void testPost() {
         RestRequest req = new RestRequest();
+        req.requestBody = Blob.valueOf(
+            '{"data":{"firstName":"max", "lastName":"testcase"}}'
+        );
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'POST';
         req.addHeader('Content-Type', 'application/json');
@@ -59,7 +62,7 @@ public with sharing class RESTControllerTest {
         TestResponseEnvelope envelope = getResponseEnvelope(response);
         System.assert(envelope.errors.isEmpty(), 'there should be no errors');
         System.assert(envelope.messages.isEmpty(), 'there should be no messages');
-        System.assertEquals('post records', envelope.data);
+        System.assertEquals('max testcase', envelope.data);
     }
 
     @IsTest

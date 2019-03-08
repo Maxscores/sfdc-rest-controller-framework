@@ -37,7 +37,10 @@ global class TestRESTController extends RESTController {
     }
 
     protected override void postRecords() {
-        envelope.setData('post records');
+        RequestEnvelope requestEnvelope = new RequestEnvelope(request.requestBody.toString());
+
+        String responseString = requestEnvelope.data.firstName + ' ' + requestEnvelope.data.lastName;
+        envelope.setData(responseString);
 
         response.addHeader('Content-Type', 'application/json');
         response.responseBody = envelope.asBlob();
