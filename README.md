@@ -33,14 +33,15 @@ global class AccountsRESTController extends RESTController {
 
     @HttpGet
     global static void getAccounts() {
-        RestContext.response = controller.getRecords();
+        controller.getRecords();
     }
 
-    public override RestResponse getRecords() {
+    public override void getRecords() {
         // will need to implement the override method to return the response, something like:
         Account accountToReturn = [Select Id From Account];
-        response.responseBody = new ResponseEnvelope(accountToReturn).getBlob();
-        return response;
+        envelope.addData(accountToReturn);
+        response.responseBody = envelope.asBlob();
+        response.addHeader('Content-Type','application/json');
     }
 }
 ```
