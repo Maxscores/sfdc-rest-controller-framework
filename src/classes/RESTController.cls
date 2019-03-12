@@ -18,60 +18,19 @@ global virtual class RESTController {
     protected RestRequest request = RestContext.request;
     @TestVisible
     protected StatusCode statusCode = new StatusCode();
-    protected ResponseEnvelope envelope = new ResponseEnvelope();
+    protected RESTResponseEnvelope envelope = new RESTResponseEnvelope();
 
     // implementation methods
+    @TestVisible
     protected virtual void postRecords() {}
+    @TestVisible
     protected virtual void patchRecords() {}
+    @TestVisible
     protected virtual void getRecords() {}
+    @TestVisible
     protected virtual void putRecords() {}
+    @TestVisible
     protected virtual void deleteRecords() {}
-
-    public class ResponseEnvelope {
-        public List<String> messages = new List<String>();
-        public List<String> errors = new List<String>();
-        public Object data;
-
-        public void setData(Object singleObject) {
-            data = singleObject;
-        }
-
-        public void setData(List<Object> objectList) {
-            data = objectList;
-        }
-
-        public void addErrors(List<String> errorsToAdd) {
-            errors.addAll(errorsToAdd);
-        }
-
-        public void addError(String errorToAdd) {
-            errors.add(errorToAdd);
-        }
-
-        public void addMessages(List<String> messagesToAdd) {
-            messages.addAll(messagesToAdd);
-        }
-
-        public void addMessage(String messageToAdd) {
-            messages.add(messageToAdd);
-        }
-
-        public Blob asBlob() {
-            return Blob.valueOf(JSON.serialize(this));
-        }
-    }
-
-    // define this class in enheriting classes
-    public class RequestEnvelope {
-        // set data to the inner class that models the data
-        public String data;
-
-        // create a constructor in the enheriting class, literally copy this
-        public RequestEnvelope(String jsonRequest) {
-            RequestEnvelope request = (RequestEnvelope) JSON.deserialize(jsonRequest, RequestEnvelope.class);
-            data = request.data;
-        }
-    }
 
     public class StatusCode {
         // HTTP Status codes from https://www.restapitutorial.com/httpstatuscodes.html

@@ -37,19 +37,16 @@ global class TestRESTController extends RESTController {
     }
 
     protected override void postRecords() {
-        RequestEnvelope requestEnvelope = new RequestEnvelope(request.requestBody.toString());
+        String jsonRequest = request.requestBody.toString();
+        RequestLead requestLead = (RequestLead) JSON.deserialize(jsonRequest, RequestLead.class);
 
-        String responseString = requestEnvelope.data.firstName + ' ' + requestEnvelope.data.lastName;
+        String responseString = requestLead.firstName + ' ' + requestLead.lastName;
         envelope.setData(responseString);
-
-        response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope.asBlob();
+        envelope.setJSONResponse(response);
     }
     protected override void patchRecords() {
         envelope.setData('patch records');
-
-        response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope.asBlob();
+        envelope.setJSONResponse(response);
     }
     protected override void getRecords() {
         String requestType = request.params.get('Type');
@@ -59,30 +56,15 @@ global class TestRESTController extends RESTController {
             envelope.addMessage('message');
         }
         envelope.setData('get records');
-
-        response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope.asBlob();
+        envelope.setJSONResponse(response);
     }
     protected override void putRecords() {
         envelope.setData('put records');
-
-        response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope.asBlob();
+        envelope.setJSONResponse(response);
     }
     protected override void deleteRecords() {
         envelope.setData('delete records');
-
-        response.addHeader('Content-Type', 'application/json');
-        response.responseBody = envelope.asBlob();
-    }
-
-    public class RequestEnvelope {
-        public RequestLead data;
-
-        public RequestEnvelope(String jsonRequest) {
-            RequestEnvelope request = (RequestEnvelope) JSON.deserialize(jsonRequest, RequestEnvelope.class);
-            data = request.data;
-        }
+        envelope.setJSONResponse(response);
     }
 
     public class RequestLead {

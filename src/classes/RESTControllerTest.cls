@@ -47,7 +47,7 @@ public with sharing class RESTControllerTest {
     public static void testPost() {
         RestRequest req = new RestRequest();
         req.requestBody = Blob.valueOf(
-            '{"data":{"firstName":"max", "lastName":"testcase"}}'
+            '{"firstName":"max", "lastName":"testcase"}'
         );
         req.requestURI = '/services/apexrest/tests/12345';
         req.httpMethod = 'POST';
@@ -162,67 +162,22 @@ public with sharing class RESTControllerTest {
     }
 
     @IsTest
-    public static void TestNewRequestEnvelope() {
-        String jsonRequest = '{\"data\": {' +
-             '\"firstName\": \"Von\",' +
-             '\"lastName\": \"Miller\"' +
-             '}}';
-        TestRESTController.RequestEnvelope envelope = new TestRESTController.RequestEnvelope(jsonRequest);
-
-        System.assertNotEquals(null, envelope.data);
-        System.assertEquals('Von', envelope.data.firstName);
-        System.assertEquals('Miller', envelope.data.lastName);
+    public static void testInheritedMethods() {
+        RESTController controller = new RESTController();
+        controller.getRecords();
+        controller.postRecords();
+        controller.patchRecords();
+        controller.putRecords();
+        controller.deleteRecords();
     }
 
-    @IsTest
-    public static void TestEnheritedRequestEnvelope() {
-        String jsonRequest = '{\"data\": \"expectedData\"}';
-
-        String expectedData = 'expectedData';
-        RESTController.RequestEnvelope envelope = new RESTController.RequestEnvelope(jsonRequest);
-
-        System.assertNotEquals(null, envelope.data);
-        System.assertEquals(expectedData, envelope.data);
-    }
-
-    @IsTest
-    public static void TestResponseEnvelopeMethods() {
-        RESTController.ResponseEnvelope envelope = new RESTController.ResponseEnvelope();
-
-        System.assertNotEquals(null, envelope.errors);
-        System.assertNotEquals(null, envelope.messages);
-        System.assertEquals(null, envelope.data);
-
-        envelope.setData('hello');
-        System.assertEquals('hello', envelope.data);
-
-        envelope = new RESTController.ResponseEnvelope();
-        envelope.setData(new List<String>{'hello', 'my', 'friend'});
-        System.assertEquals(new List<String>{'hello', 'my', 'friend'}, envelope.data);
-
-        envelope.addError('error 1');
-        System.assertEquals('error 1', envelope.errors[0]);
-
-        envelope.addErrors(new List<String>{'error 2', 'error 3'});
-        System.assertEquals('error 2', envelope.errors[1]);
-        System.assertEquals('error 3', envelope.errors[2]);
-
-        envelope.addMessage('Message 1');
-        System.assertEquals('Message 1', envelope.messages[0]);
-
-        envelope.addMessages(new List<String>{'Message 2', 'Message 3'});
-        System.assertEquals('Message 2', envelope.messages[1]);
-        System.assertEquals('Message 3', envelope.messages[2]);
-
-        System.assertEquals(Blob.valueOf(JSON.serialize(envelope)), envelope.asBlob());
-    }
 
     public static TestResponseEnvelope getResponseEnvelope(RestResponse response) {
         String jsonResponse = response.responseBody.toString();
         return (TestResponseEnvelope) JSON.deserialize(jsonResponse, TestResponseEnvelope.class);
     }
 
-    public class TestResponseEnvelope {
+    public class TestResponseEnvelope extends RESTResponseEnvelope{
         public List<String> messages;
         public List<String> errors;
         public String data;
