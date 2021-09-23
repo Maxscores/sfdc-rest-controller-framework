@@ -91,6 +91,7 @@ global virtual class RESTController {
         public Integer internalServerError = 500;
         
         public String thisIsANewMethod() {
+            // trigger refresh
             return 'string';
         }
     }
