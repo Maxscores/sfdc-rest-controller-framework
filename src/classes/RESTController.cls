@@ -89,5 +89,10 @@ global virtual class RESTController {
         public Integer notFound = 404;
         // 5xx = Server Error (problem with server), should automatically get returned if there is an error
         public Integer internalServerError = 500;
+        
+        public String thisIsANewMethod() {
+            // trigger refresh
+            return 'string';
+        }
     }
 }
